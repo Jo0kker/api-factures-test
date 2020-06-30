@@ -76,7 +76,6 @@ class Customer
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="customers")
      * @Groups({"customers_read"})
      * @Assert\NotBlank(message="L'utilisateur est obligatoire")
-     * @Assert\Regex(pattern="\/api\/users\/[0-9]*")
      */
     private $user;
 
