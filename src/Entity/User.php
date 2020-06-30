@@ -14,7 +14,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ApiResource()
+ * @ApiResource(
+ *     normalizationContext={"groups"={"users_read"}}
+ * )
  * @UniqueEntity(fields={"email"},message="Cette adresse mail est déjà enregistrée")
  */
 class User implements UserInterface
@@ -23,13 +25,13 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"customers_read", "invoices_read", "invoices_subresouce"})
+     * @Groups({"customers_read", "invoices_read", "invoices_subresouce", "users_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"customers_read", "invoices_read", "invoices_subresouce"})
+     * @Groups({"customers_read", "invoices_read", "invoices_subresouce", "users_read"})
      * @Assert\NotBlank(message="Ne doit pas etre vide")
      * @Assert\Email(message="Doit etre une adresse mail")
      */
@@ -49,14 +51,14 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"customers_read", "invoices_read", "invoices_subresouce"})
+     * @Groups({"customers_read", "invoices_read", "invoices_subresouce", "users_read"})
      * @Assert\NotBlank(message="Le prénom est obligatoire")
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"customers_read", "invoices_read", "invoices_subresouce"})
+     * @Groups({"customers_read", "invoices_read", "invoices_subresouce", "users_read"})
      * @Assert\NotBlank(message="Le nom est oblogatoire")
      */
     private $lastName;
