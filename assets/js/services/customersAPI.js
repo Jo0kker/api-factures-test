@@ -1,8 +1,9 @@
 import axios from 'axios';
+import {CUSTOMERS_API, CUSTOMER_API} from "../config";
 
 function findAll() {
     return axios
-        .get("https://localhost:8000/api/clients")
+        .get(CUSTOMERS_API)
         .then(response => response.data['hydra:member'])
 }
 
@@ -12,16 +13,16 @@ function deleteCustomers(id) {
 
 function find(id) {
     return axios
-        .get("https://localhost:8000/api/client/" + id)
+        .get(CUSTOMER_API + "/" + id)
         .then(response => response.data);
 }
 
 function update(id, customer) {
-    return axios.put("https://localhost:8000/api/client/" + id, customer);
+    return axios.put(CUSTOMER_API + "/" + id, customer);
 }
 
 function create(customer) {
-    return axios.post("https://localhost:8000/api/client", customer)
+    return axios.post(CUSTOMER_API, customer)
 }
 
 export default {
