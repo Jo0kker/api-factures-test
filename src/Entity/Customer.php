@@ -15,12 +15,13 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
+
 /**
  * @ORM\Entity(repositoryClass=CustomerRepository::class)
  * @ApiResource(
  *     normalizationContext={"groups"={"customers_read"}},
- *     collectionOperations={"GET"={"path"="/clients"},"POST"={"path"="/clients"}},
- *     itemOperations={"GET"={"path"="/clients/{id}"},"PUT"={"path"="/clients/{id}"},"DELETE"={"path"="/clients/{id}"}},
+ *     collectionOperations={"GET"={"path"="/clients"},"POST"={"path"="/client"}},
+ *     itemOperations={"GET"={"path"="/client/{id}"},"PUT"={"path"="/client/{id}"},"DELETE"={"path"="/client/{id}"}},
  *     subresourceOperations={"invoices_get_subresource"={"path"="/client/{id}/factures"}}
  * )
  * @ApiFilter(SearchFilter::class)
@@ -48,8 +49,8 @@ class Customer
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"customers_read","invoices_read"})
-     * @Assert\NotBlank(message="Le nom doit etre rempli")
-     * @Assert\Length(min="3",minMessage="Le nom doit faire plus de 3 caractère")
+     * @Assert\NotBlank(message="Le nom du client est obligatoire")
+     * @Assert\Length(min="3",minMessage="Le nom doit faire plus de 3 caractère",max="255", maxMessage="Le nom doit faire moins de 255 caractères",allowEmptyString=true)
      */
     private $lastName;
 

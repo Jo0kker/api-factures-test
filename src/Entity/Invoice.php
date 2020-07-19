@@ -19,11 +19,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     },
  *     subresourceOperations={"api_customers_invoices_get_subresource"={"normalization_context"={"groups"={"invoices_subresouce"}}}},
  *     normalizationContext={"groups"={"invoices_read"}},
- *     collectionOperations={"GET"={"path"="/factures"},"POST"={"path"="/factures"}},
+ *     collectionOperations={"GET"={"path"="/factures"},"POST"={"path"="/facture"}},
  *     itemOperations={
- *         "GET"={"path"="/factures/{id}"},
- *         "PUT"={"path"="/factures/{id}"},
- *         "DELETE"={"path"="/factures/{id}"},
+ *         "GET"={"path"="/facture/{id}"},
+ *         "PUT"={"path"="/facture/{id}"},
+ *         "DELETE"={"path"="/facture/{id}"},
  *         "increment"={
  *              "method"="post",
  *              "path"="/factures/{id}/increment",
@@ -53,6 +53,7 @@ class Invoice
      * @Groups({"invoices_read","customers_read", "invoices_subresouce"})
      * @Assert\NotBlank(message="Veillez remplir un montant")
      * @Assert\Type(type="numeric", message="Le montant doit etre numerique")
+     * @Assert\Positive(message="Doit etre supérieur a zero")
      */
     private $amount;
 
@@ -67,7 +68,7 @@ class Invoice
      * @ORM\Column(type="string", length=255)
      * @Groups({"invoices_read","customers_read", "invoices_subresouce"})
      * @Assert\NotBlank(message="Le statue de la facture est obligatoire")
-     * @Assert\Choice(choices={"SEND","PAID","CANCELLED"}, message="Le status doit etre Snet ou paid ou cancelled")
+     * @Assert\Choice(choices={"SENT","PAID","CANCELLED"}, message="Le status doit etre SEND ou PAID ou CANCELLED")
      */
     private $status;
 
