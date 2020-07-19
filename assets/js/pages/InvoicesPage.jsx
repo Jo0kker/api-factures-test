@@ -3,6 +3,8 @@ import Pagination from "../components/Pagination";
 import moment from "moment";
 import InvoicesAPI from "../services/invoicesAPI";
 import {Link} from "react-router-dom";
+import {toast} from "react-toastify";
+import TableLoader from "../components/loaders/TableLoader";
 
 const STATUS_CLASSES = {
     PAID: "success",
@@ -20,14 +22,15 @@ const InvoicesPage = (props) => {
     const [search, setSearch] = useState("")
     const [invoices, setInvoices] = useState([]);
     const itemsPerPage = 10;
-
+    const [loading, setLoading] = useState(true);
     // récup des factues après de l'api
     const fetchInvoices = async () => {
         try {
             const data = await InvoicesAPI.findAll()
             setInvoices(data);
+            setLoading(false);
         } catch (e) {
-            console.log(e.response);
+            toast.error("Erreur lors du chargement des factures")
         }
     }
 
@@ -41,8 +44,9 @@ const InvoicesPage = (props) => {
         setInvoices(invoices.filter(invoice => invoice.id !== id));
         try {
             await InvoicesAPI.delete(id)
+            toast.success(`Facture correctement supprimée`)
         } catch (e) {
-            console.log(e.response);
+            toast.error("Une erreur est survenu")
             setInvoices(originalInvoices);
         }
     }
@@ -91,7 +95,7 @@ const InvoicesPage = (props) => {
             <tbody>
             {paginatedInvoices.map(invoice => <tr key={invoice.id}>
                 <td>{invoice.chrono}</td>
-                <td>{invoice.customer.firstName} {invoice.customer.lastName}</td>
+                <td><Link to={"/client/" + invoice.customer.id}>{invoice.customer.firstName} {invoice.customer.lastName}</Link></td>
                 <td className={"text-center"}>{formatDate(invoice.sendAt)}</td>
                 <td className={"text-center"}><span className={"badge badge-" + STATUS_CLASSES[invoice.status] }>{STATUS_LABELS[invoice.status]}</span></td>
                 <td className={"text-center"}>{invoice.amount.toLocaleString()} €</td>
@@ -102,6 +106,7 @@ const InvoicesPage = (props) => {
             </tr>)}
             </tbody>
         </table>
+        {loading && <TableLoader /> }
         <Pagination currentPage={currentPage} itemsPerPage={itemsPerPage} onPageChanged={handlePageChange} length={filteredInvoices.length} />
     </>);
 }

@@ -3,6 +3,7 @@ import Field from "../components/forms/Field";
 import {Link} from "react-router-dom";
 import axios from "axios";
 import usersApi from "../services/usersApi";
+import {toast} from "react-toastify";
 
 function RegisterPage({history}) {
 
@@ -36,6 +37,7 @@ function RegisterPage({history}) {
         try {
             await usersApi.register(user);
             setError({});
+            toast.success("Inscription réussi")
             history.replace('/login');
         } catch (e) {
             const {violations} = e.response.data;
@@ -45,6 +47,7 @@ function RegisterPage({history}) {
                 });
                 setError(apiErrors);
             }
+            toast.error("Erreur lors de l'inscription");
         }
     }
 
