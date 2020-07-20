@@ -57,6 +57,7 @@ function isAuthenticated() {
     if (token) {
         const {exp : expiration} = jwtDecode(token);
         if (expiration * 1000 > new Date().getTime()) {
+            console.log(new Date().getTime())
             return true;
         }
         return false;
