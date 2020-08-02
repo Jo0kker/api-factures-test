@@ -1,14 +1,14 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 const HomePage = (props) => {
     return (<div className="jumbotron">
-        <h1 className="display-3">Hello, world!</h1>
-        <p className="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention
-            to featured content or information.</p>
+        <h1 className="display-3">Application de facture</h1>
+        <p className="lead">Créer vous un compte, créer des cliens et editées leur des factures.</p>
         <hr className="my-4" />
-            <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+            <p>Site de mise en pratique pour un front en React, à distance un api sous symfony.</p>
             <p className="lead">
-                <a className="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+                <Link to={"/login"} className="btn btn-primary btn-lg" href="#" role="button">Crée un compte</Link>
             </p>
     </div>);
 }
