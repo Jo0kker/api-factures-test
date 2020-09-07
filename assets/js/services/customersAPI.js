@@ -8,7 +8,7 @@ function findAll() {
 }
 
 function deleteCustomers(id) {
-    return axios.delete("https://localhost:8000/api/client/" + id);
+    return axios.delete(CUSTOMER_API + id);
 }
 
 function find(id) {
